@@ -1,0 +1,43 @@
+# @name get-prompts
+GET http://localhost:3333/prompts
+
+
+###
+
+
+# @name upload
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="tao_profundo.mp3"
+Content-Type: audio/mpeg
+
+< ./tao_profundo.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+###
+
+
+# @name create-transcription
+POST http://localhost:3333/videos/be2cd862-c204-4e65-b73b-2af6801d8399/transcription
+Content-Type: application/json
+
+{
+  "prompt": "guide voice, vs"
+}
+
+
+###
+
+
+# @name generate-ai-transcription
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+  "videoId": "be2cd862-c204-4e65-b73b-2af6801d8399",
+  "temperature": 0.5,
+  "template": "Gere um resumo sucinto da transcrição do vídeo informada a seguir: '''{transcription}'''"
+}
